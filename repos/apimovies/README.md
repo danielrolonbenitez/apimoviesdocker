@@ -22,6 +22,9 @@ requisites
 4- create to jwt token   with comman  php artisan jwt:secret. 
 5- create key aplicacion php artisan key:generate.
 
+6- "Important active module write in apache for that the route work"
+   command  -sudo a2enmod rewrite  and sudo service apache2 restart
+
 
 #configure
 1-access to database in file .env
@@ -33,15 +36,15 @@ DB_DATABASE=apimovies
 DB_USERNAME=api
 DB_PASSWORD=123456
 
-7-run php artisan migrate
+2-run php artisan migrate
 
-8-run php artisan migrate:fresh --seed //for  run seeders and factories.
+3-run php artisan migrate:fresh --seed //for  run seeders and factories.
 
-9-now may do login in url  http://apimovies.op:4080/api/login post with data json.
+4-now may do login in url  http://apimovies.op:4080/api/login post with data json.
 
 
 
-2-run comand in your console 
+5-run comand in your console 
  composer install to create folder vendor.
  php artisan migrate:fresh --sed this run migration and seeder and factories that load data (movies,tvshow,staff,season,episode) and user default for test in yours table. 
  php artisan jwt:secret  for generate key app.

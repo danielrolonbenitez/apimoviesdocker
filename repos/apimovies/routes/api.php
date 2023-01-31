@@ -17,10 +17,8 @@ use App\Http\Controllers\ApiTokenController;
 |
 */
 
-/*movies*/
 
 Route::post('/login', [ApiTokenController::class, 'login']);
-
 
 Route::group(['middleware' => 'jwt.verify'], function () {
     /** jwt endpoint**/
@@ -41,6 +39,5 @@ Route::group(['middleware' => 'jwt.verify'], function () {
     Route::get('/tvshow', [ApiTvshowController::class, 'index']);
     Route::get('/tvshow/{id}', [ApiTvshowController::class, 'show']);
 });
-
 
 Route::any('{path}', [ApiMovieController::class, 'customError'])->where('path', '.*');
