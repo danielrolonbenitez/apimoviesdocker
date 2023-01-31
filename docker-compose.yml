@@ -1,0 +1,66 @@
+version: '3.5'
+services:
+  api_movie:
+    container_name: apimovies
+    build: './docker/'
+    restart: always
+    ports:  # Ports to expose
+    - "4080:80"
+    extra_hosts:
+     - "apimovies.op:127.0.0.1"
+    hostname: apimovies.op
+    domainname: op 
+    volumes:
+      - './repos/:/var/www/html/'
+      - './docker/apache/etc/virtualhost.conf:/etc/apache2/sites-enabled/000-default.conf'
+    networks:
+       laravel_net:
+         aliases:
+            - api_host
+    depends_on:
+      - maria    
+  maria:
+      container_name: mariadb
+      image: 'bitnami/mariadb:latest'
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: '123456'
+        MARIADB_ROOT_PASSWORD: '123456'
+      ports:
+        - 3307:3306
+      volumes:
+        - '/db/:/var/lib/mysql'
+        - './db/init.sql:/docker-entrypoint-initdb.d/01init.sql'
+      networks:
+       laravel_net:
+         aliases:
+            - maria_host
+  
+  phpmyadmin:
+        container_name: phpmyadmin
+        image: phpmyadmin
+        restart: always
+        ports:
+            - 8081:80
+        environment:
+              PMA_HOST: 'mariadb'
+        networks:
+          laravel_net:
+            aliases:
+               - phpmyadmin_host
+        depends_on:
+            - maria
+   
+      
+networks:
+    laravel_net:
+        name: laravel_network
+        driver: bridge
+        ipam: 
+           driver: default
+      
+      
+      
+      
+      
+      
